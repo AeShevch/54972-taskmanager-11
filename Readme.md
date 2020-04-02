@@ -1,7 +1,7 @@
 # Личный проект «Менеджер задач» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александр Шевченко](https://up.htmlacademy.ru/ecmascript/11/user/54972).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Датский](https://htmlacademy.ru/profile/id129440).
 
 ---
 
