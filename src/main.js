@@ -25,9 +25,8 @@ const menuContainerElement = mainContainerElement.querySelector(`.control`);
  * Возвращает вёрстку меню
  * @return {string}
  */
-const createSiteMenuTemplate = () => {
-  return (
-    `<section class="control__btn-wrap">
+const createSiteMenuTemplate = () => (
+  `<section class="control__btn-wrap">
       <input
         type="radio"
         name="control"
@@ -55,16 +54,14 @@ const createSiteMenuTemplate = () => {
         >STATISTICS</label
       >
     </section>`
-  );
-};
+);
 
 /**
  * Возвращает вёрстку фильтров
  * @return {string}
  */
-const createSiteFiltersTemplate = () => {
-  return (
-    `<section class="main__filter filter container">
+const createSiteFiltersTemplate = () => (
+  `<section class="main__filter filter container">
         <input
           type="radio"
           id="filter__all"
@@ -123,16 +120,14 @@ const createSiteFiltersTemplate = () => {
           >Archive <span class="filter__archive-count">115</span></label
         >
       </section>`
-  );
-};
+);
 
 /**
  * Возвращает вёрстку сортировки
  * @return {string}
  */
-const createBoardTemplate = () => {
-  return (
-    `<section class="board container">
+const createBoardTemplate = () => (
+  `<section class="board container">
       <div class="board__filter-list">
         <a href="#" class="board__filter">SORT BY DEFAULT</a>
         <a href="#" class="board__filter">SORT BY DATE up</a>
@@ -141,16 +136,14 @@ const createBoardTemplate = () => {
 
       <div class="board__tasks"></div>
     </section>`
-  );
-};
+);
 
 /**
  * Возвращает вёрстку формы добавления/редактирования карточки задачи
  * @return {string}
  */
-const createEditCardTemplate = () => {
-  return (
-    `<article class="card card--edit card--yellow card--repeat">
+const createEditCardTemplate = () => (
+  `<article class="card card--edit card--yellow card--repeat">
       <form class="card__form" method="get">
         <div class="card__inner">
           <div class="card__color-bar">
@@ -347,16 +340,14 @@ const createEditCardTemplate = () => {
         </div>
       </form>
     </article>`
-  );
-};
+);
 
 /**
  * Возвращает вёрстку карточки задачи
  * @return {string}
  */
-const createTaskCardTemplate = () => {
-  return (
-    `<article class="card card--black">
+const createTaskCardTemplate = () => (
+  `<article class="card card--black">
       <div class="card__form">
         <div class="card__inner">
           <div class="card__control">
@@ -399,16 +390,15 @@ const createTaskCardTemplate = () => {
         </div>
       </div>
     </article>`
-  );
-};
+);
 
 /**
  * Возвращает вёрстку кнопки «load more»
  * @return {string}
  */
-const createLoadMoreBtnTemplate = () => {
-  return `<button class="load-more" type="button">load more</button>`;
-};
+const createLoadMoreBtnTemplate = () => (
+  `<button class="load-more" type="button">load more</button>`
+);
 
 
 /**
