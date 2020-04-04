@@ -6,17 +6,7 @@
 const TASK_CARDS_COUNT = 3;
 
 
-// ГЛАВНЫЕ КОНТЕЙНЕРЫ:
-/**
- * Главный контейнер страницы
- * @type {Element}
- */
 const mainContainerElement = document.querySelector(`.main`);
-
-/**
- * Контейнер с меню
- * @type {Element}
- */
 const menuContainerElement = mainContainerElement.querySelector(`.control`);
 
 
