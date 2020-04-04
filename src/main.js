@@ -1,18 +1,10 @@
 "use strict";
-/**
- * Количество карточек задачи на странице
- * @type {number}
- */
 const TASK_CARDS_COUNT = 3;
-
-
 const mainContainerElement = document.querySelector(`.main`);
 const menuContainerElement = mainContainerElement.querySelector(`.control`);
 
-
-// ФУНКЦИИ, ВОЗВРАЩАЮЩИЕ ВЁРСТКУ КОМПОНЕНТОВ
 /**
- * Возвращает вёрстку меню
+ * Returns the markup of menu
  * @return {string}
  */
 const createSiteMenuTemplate = () => (
@@ -47,7 +39,7 @@ const createSiteMenuTemplate = () => (
 );
 
 /**
- * Возвращает вёрстку фильтров
+ * Returns the markup of filter
  * @return {string}
  */
 const createSiteFiltersTemplate = () => (
@@ -113,7 +105,7 @@ const createSiteFiltersTemplate = () => (
 );
 
 /**
- * Возвращает вёрстку сортировки
+ * Returns the markup of sort block
  * @return {string}
  */
 const createBoardTemplate = () => (
@@ -129,7 +121,7 @@ const createBoardTemplate = () => (
 );
 
 /**
- * Возвращает вёрстку формы добавления/редактирования карточки задачи
+ * Returns the markup of add/edit task button
  * @return {string}
  */
 const createEditCardTemplate = () => (
@@ -333,7 +325,7 @@ const createEditCardTemplate = () => (
 );
 
 /**
- * Возвращает вёрстку карточки задачи
+ * Returns the markup of task card
  * @return {string}
  */
 const createTaskCardTemplate = () => (
@@ -383,49 +375,36 @@ const createTaskCardTemplate = () => (
 );
 
 /**
- * Возвращает вёрстку кнопки «load more»
+ * Returns the markup of «load more» button
  * @return {string}
  */
 const createLoadMoreBtnTemplate = () => (
   `<button class="load-more" type="button">load more</button>`
 );
 
-
 /**
- * Вставляет вёрстку компонента
- * @param {object} container Контейнер для вставки вёрстки
- * @param {string} template Вёрстка компонента
- * @param {string} [place] Функция, возвращающая разметку (optional)
+ * Renders components markup
+ * @param {object} container Container for inserting a components markup
+ * @param {string} template Component markup
+ * @param {string} [place] Insert position (optional)
  */
-const render = (container, template, place = `beforeEnd`) => {
+const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
-/**
- * Функция инициализации страницы
- */
 const init = () => {
-  // Вставляем компонент меню
   render(menuContainerElement, createSiteMenuTemplate());
-  // Вставляем компонент фильтров
   render(mainContainerElement, createSiteFiltersTemplate());
-  // Вставляем сортировку
   render(mainContainerElement, createBoardTemplate());
 
-  // Контейнер контента
   const boardContainerElement = mainContainerElement.querySelector(`.board`);
-  // Контейнер для карточек задач
   const tasksListElement = boardContainerElement.querySelector(`.board__tasks`);
 
-  // Вставляем компонент формы редактирования/создания карточки
   render(tasksListElement, createEditCardTemplate());
-  // Вставляем указанное количество карточек задачи
   for (let i = 0; i <= TASK_CARDS_COUNT; i++) {
     render(tasksListElement, createTaskCardTemplate());
   }
-  // Вставляем кнопку «load more»
   render(boardContainerElement, createLoadMoreBtnTemplate());
 };
 
-// Запускаем
 init();
