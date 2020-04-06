@@ -1,9 +1,9 @@
-import {createSiteMenuTemplate} from "./components/menu";
-import {createSiteFiltersTemplate} from "./components/filters";
-import {createBoardTemplate} from "./components/board";
-import {createEditCardTemplate} from "./components/edit-card";
-import {createLoadMoreBtnTemplate} from "./components/load-more-btn";
-import {createTaskCardTemplate} from "./components/task-card";
+import {createSiteMenuTemplate} from './components/menu';
+import {createSiteFiltersTemplate} from './components/filters';
+import {createBoardTemplate} from './components/board';
+import {createEditCardTemplate} from './components/edit-card';
+import {createLoadMoreButtonTemplate} from './components/load-more-btn';
+import {createTaskCardTemplate} from './components/task-card';
 
 const TASK_CARDS_COUNT = 3;
 const mainContainerElement = document.querySelector(`.main`);
@@ -31,7 +31,7 @@ const init = () => {
   for (let i = 0; i <= TASK_CARDS_COUNT; i++) {
     render(tasksListElement, createTaskCardTemplate());
   }
-  render(boardContainerElement, createLoadMoreBtnTemplate());
+  render(boardContainerElement, createLoadMoreButtonTemplate());
 };
 
 init();
