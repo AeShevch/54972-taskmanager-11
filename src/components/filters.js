@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createFilterMarkup = ({name, count}, isChecked) => (
   `<input
       type="radio"
@@ -15,10 +17,33 @@ const createFilterMarkup = ({name, count}, isChecked) => (
  * @param {Object[]} filterData
  * @return {string}
  */
-export const createSiteFiltersTemplate = (filterData) => {
+const createSiteFiltersTemplate = (filterData) => {
   const filterMarkup = filterData.map((filterItem, index) => createFilterMarkup(filterItem, index === 0)).join(`\n`);
 
   return `<section class="main__filter filter container">
           ${filterMarkup}
           </section>`;
 };
+
+export default class FilterComponent {
+  constructor(filters) {
+    this._filters = filters;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createSiteFiltersTemplate(this._filters);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

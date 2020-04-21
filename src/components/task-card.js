@@ -1,4 +1,4 @@
-import {addZeroToNumber} from '../mock/utils';
+import {addZeroToNumber, createElement} from '../utils';
 
 const getDeadlineHtml = (dueDate) => (
   `<div class="card__dates">
@@ -17,23 +17,28 @@ const getDeadlineHtml = (dueDate) => (
  */
 const createTaskCardTemplate = ({colors, description, dueDate, isArchive, isFavourite, repeatingDays}) => {
   const isRepeating = Object.values(repeatingDays).includes(true);
+  const repeatClass = isRepeating ? `card--repeat` : ``;
   const hasDate = dueDate !== null;
   const isOverdue = hasDate && dueDate < new Date();
+  const deadlineClass = isOverdue ? `card--deadline` : ``;
+  const deadlineHtml = hasDate ? getDeadlineHtml(dueDate) : ``;
   const color = Object.entries(colors).find(([, value]) => value === true)[0];
+  const archiveButtonInactiveClass = isArchive ? `` : `card__btn--disabled`;
+  const favoriteButtonInactiveClass = isFavourite ? `` : `card__btn--disabled`;
 
-  return `<article class="card card--${color} ${isRepeating ? `card--repeat` : ``} ${isOverdue ? `card--deadline` : ``}">
+  return `<article class="card card--${color} ${repeatClass} ${deadlineClass}">
             <div class="card__form">
               <div class="card__inner">
                 <div class="card__control">
                   <button type="button" class="card__btn card__btn--edit">
                     edit
                   </button>
-                  <button type="button" class="card__btn card__btn--archive ${isArchive ? `` : `card__btn--disabled`}">
+                  <button type="button" class="card__btn card__btn--archive ${archiveButtonInactiveClass}">
                     archive
                   </button>
                   <button
                     type="button"
-                    class="card__btn card__btn--favorites ${isFavourite ? `` : `card__btn--disabled`}"
+                    class="card__btn card__btn--favorites ${favoriteButtonInactiveClass}"
                   >
                     favorites
                   </button>
@@ -51,7 +56,7 @@ const createTaskCardTemplate = ({colors, description, dueDate, isArchive, isFavo
 
                 <div class="card__settings">
                   <div class="card__details">
-                    ${hasDate ? getDeadlineHtml(dueDate) : ``}
+                    ${deadlineHtml}
                   </div>
                 </div>
               </div>
@@ -59,4 +64,26 @@ const createTaskCardTemplate = ({colors, description, dueDate, isArchive, isFavo
           </article>`;
 };
 
-export {createTaskCardTemplate};
+export default class TaskComponent {
+  constructor(task) {
+    this._task = task;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskCardTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

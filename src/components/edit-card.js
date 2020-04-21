@@ -1,4 +1,4 @@
-import {addZeroToNumber} from '../mock/utils';
+import {createElement, addZeroToNumber} from '../utils';
 
 const getDeadlineHtml = (dueDate) => (
   `<fieldset class="card__date-deadline">
@@ -109,4 +109,25 @@ const createEditCardTemplate = (task) => {
     </article>`;
 };
 
-export {createEditCardTemplate};
+export default class TaskEditComponent {
+  constructor(task) {
+    this._task = task;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEditCardTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

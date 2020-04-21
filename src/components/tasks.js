@@ -1,20 +1,19 @@
 import {createElement} from '../utils.js';
 
-/**
- * Returns the markup of sort block
- * @return {string}
- */
-const createBoardTemplate = () => (
-  `<section class="board container"></section>`
-);
+const createTasksTemplate = () => {
+  return (
+    `<div class="board__tasks"></div>`
+  );
+};
 
-export default class BoardComponent {
+
+export default class TasksComponent {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createBoardTemplate();
+    return createTasksTemplate();
   }
 
   getElement() {
