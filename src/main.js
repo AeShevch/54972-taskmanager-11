@@ -6,9 +6,11 @@ import BoardComponent from "./components/board";
 import TaskEditComponent from "./components/edit-card";
 import LoadMoreButtonComponent from "./components/load-more-btn";
 import TaskComponent from "./components/task-card";
-import {filters} from './mock/filter';
-import {tasks} from './mock/tasks';
-import {render} from './utils';
+import NoTasksComponent from "./components/no-tasks";
+import {filters} from "./mock/filter";
+import {tasks} from "./mock/tasks";
+import {render} from "./utils";
+import {isEscapeEvent} from "./utils";
 
 const TASK_CARDS_PER_LINE = 4;
 
@@ -16,10 +18,16 @@ const mainContainerElement = document.querySelector(`.main`);
 const menuContainerElement = mainContainerElement.querySelector(`.control`);
 
 const renderTask = (tasksListElement, task) => {
-  const onEditButtonClick = () => tasksListElement.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+  const onEscPress = () => isEscapeEvent(tasksListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement()));
+
+  const onEditButtonClick = () => {
+    tasksListElement.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+    document.addEventListener(`keyup`, onEscPress);
+  };
   const onEditFormSubmit = (evt) => {
     evt.preventDefault();
     tasksListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
+    document.removeEventListener(`keyup`, onEscPress);
   };
 
   const taskComponent = new TaskComponent(task);
@@ -45,22 +53,26 @@ const renderBoard = () => {
 
   const tasksListElement = boardContainerElement.querySelector(`.board__tasks`);
 
-  const makeShowNewTasksFunc = () => {
-    let tasksArr = tasks.slice();
-    return (count) => {
-      tasksArr.splice(0, count).forEach((task) => renderTask(tasksListElement, task));
-      if (!tasksArr.length) {
-        loadMoreBtnElement.remove();
-      }
+  if (!tasks.length) {
+    render(tasksListElement, new NoTasksComponent().getElement());
+  } else {
+    const makeShowNewTasksFunc = () => {
+      let tasksArr = tasks.slice();
+      return (count) => {
+        tasksArr.splice(0, count).forEach((task) => renderTask(tasksListElement, task));
+        if (!tasksArr.length) {
+          loadMoreBtnElement.remove();
+        }
+      };
     };
-  };
-  const showNewTasks = makeShowNewTasksFunc();
-  showNewTasks(TASK_CARDS_PER_LINE);
+    const showNewTasks = makeShowNewTasksFunc();
+    showNewTasks(TASK_CARDS_PER_LINE);
 
-  render(boardContainerElement, new LoadMoreButtonComponent().getElement());
-  const loadMoreBtnElement = boardContainerElement.querySelector(`.load-more`);
-  const onLoadMoreClick = () => showNewTasks(TASK_CARDS_PER_LINE);
-  loadMoreBtnElement.addEventListener(`click`, onLoadMoreClick);
+    render(boardContainerElement, new LoadMoreButtonComponent().getElement());
+    const loadMoreBtnElement = boardContainerElement.querySelector(`.load-more`);
+    const onLoadMoreClick = () => showNewTasks(TASK_CARDS_PER_LINE);
+    loadMoreBtnElement.addEventListener(`click`, onLoadMoreClick);
+  }
 };
 
 const init = () => {
