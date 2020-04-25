@@ -38,9 +38,3 @@ export const render = (container, element, place = `beforeend`) => {
       break;
   }
 };
-
-export const isEscapeEvent = (evt, action) => {
-  if (evt.key === `Escape`) {
-    action();
-  }
-};

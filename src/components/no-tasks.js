@@ -6,7 +6,7 @@ const getNoTasksHtml = () => (
   ;</p>`
 );
 
-export default class NoTasksComponent {
+export default class NoTasks {
   constructor() {
     this._element = null;
   }

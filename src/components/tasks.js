@@ -5,7 +5,7 @@ const createTasksTemplate = () => (
 );
 
 
-export default class TasksComponent {
+export default class Tasks {
   constructor() {
     this._element = null;
   }

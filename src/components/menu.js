@@ -35,7 +35,7 @@ const createSiteMenuTemplate = () => (
     </section>`
 );
 
-export default class SiteMenuComponent {
+export default class Menu {
   constructor() {
     this._element = null;
   }

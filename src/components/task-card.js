@@ -64,7 +64,7 @@ const createTaskCardTemplate = ({colors, description, dueDate, isArchive, isFavo
           </article>`;
 };
 
-export default class TaskComponent {
+export default class TaskCard {
   constructor(task) {
     this._task = task;
 

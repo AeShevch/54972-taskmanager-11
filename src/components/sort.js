@@ -8,7 +8,7 @@ const createSortHtml = () => (
   </div>`
 );
 
-export default class SortComponent {
+export default class Sort {
   constructor() {
     this._element = null;
   }

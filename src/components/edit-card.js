@@ -109,7 +109,7 @@ const createEditCardTemplate = (task) => {
     </article>`;
 };
 
-export default class TaskEditComponent {
+export default class EditCard {
   constructor(task) {
     this._task = task;
     this._element = null;
