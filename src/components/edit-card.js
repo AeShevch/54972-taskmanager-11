@@ -1,5 +1,5 @@
-import {createElement, addZeroToNumber} from '../utils';
-
+import {addZeroToNumber} from "../utils/common";
+import AbstractComponent from "./abstract-component";
 const getDeadlineHtml = (dueDate) => (
   `<fieldset class="card__date-deadline">
      <label class="card__input-deadline-wrap">
@@ -109,25 +109,17 @@ const createEditCardTemplate = (task) => {
     </article>`;
 };
 
-export default class EditCard {
+export default class EditCard extends AbstractComponent {
   constructor(task) {
+    super();
     this._task = task;
-    this._element = null;
   }
 
   getTemplate() {
     return createEditCardTemplate(this._task);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setFormSubmitHandler(handler) {
+    this.getElement().querySelector(`form`).addEventListener(`submit`, handler);
   }
 }
