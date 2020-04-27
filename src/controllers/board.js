@@ -1,6 +1,6 @@
 import {remove, render, replace} from "../utils/render";
 import BoardComponent from "../components/board";
-import SortComponent from "../components/sort";
+import SortComponent, {SortType} from "../components/sort";
 import TasksComponent from "../components/tasks";
 import {tasks} from "../mock/tasks";
 import NoTasksComponent from "../components/no-tasks";
@@ -49,6 +49,25 @@ const renderTask = (tasksListElement, task) => {
   render(tasksListElement, taskComponent);
 };
 
+const getSortedTasks = (sortType, from, to) => {
+  let sortedTasks = [];
+  const showingTasks = tasks.slice();
+
+  switch (sortType) {
+    case SortType.DATE_UP:
+      sortedTasks = showingTasks.sort((a, b) => a.dueDate - b.dueDate);
+      break;
+    case SortType.DATE_DOWN:
+      sortedTasks = showingTasks.sort((a, b) => b.dueDate - a.dueDate);
+      break;
+    case SortType.DEFAULT:
+      sortedTasks = showingTasks;
+      break;
+  }
+
+  return sortedTasks.slice(from, to);
+};
+
 export default class BoardController {
   constructor(container) {
     this._container = container;
@@ -73,18 +92,27 @@ export default class BoardController {
       render(tasksListElement, this._noTasksComponent);
       return;
     }
-    const makeShowNewTasksFunc = () => {
-      let tasksArr = tasks.slice();
+    const makeShowNewTasksFunc = (tasksArr) => {
+      let tasksToShow = tasksArr.slice();
       return (count) => {
-        tasksArr.splice(0, count).forEach((task) => renderTask(tasksListElement, task));
-        if (!tasksArr.length) {
+        tasksToShow.splice(0, count).forEach((task) => renderTask(tasksListElement, task));
+        if (!tasksToShow.length) {
           remove(this._loadMoreButtonComponent);
         }
       };
     };
-    const showNewTasks = makeShowNewTasksFunc();
+    const showNewTasks = makeShowNewTasksFunc(tasks);
     showNewTasks(TASK_CARDS_PER_LINE);
 
     renderLoadMoreButton(this._loadMoreButtonComponent, container.getElement(), showNewTasks);
+
+    this._sortComponent.setSortTypeChangeHandler((sortType) => {
+      tasksListElement.innerHTML = ``;
+      const sortedTasks = getSortedTasks(sortType, 0, TASK_CARDS_PER_LINE);
+      const showSortedTasks = makeShowNewTasksFunc(sortedTasks);
+      showSortedTasks(TASK_CARDS_PER_LINE);
+
+      renderLoadMoreButton(this._loadMoreButtonComponent, container.getElement(), showNewTasks);
+    });
   }
 }
