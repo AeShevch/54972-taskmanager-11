@@ -81,8 +81,6 @@ export default class BoardController {
   render() {
     const container = this._container;
     render(mainContainerElement, new BoardComponent());
-
-
     render(container.getElement(), this._sortComponent);
     render(container.getElement(), this._tasksComponent);
 
@@ -92,6 +90,7 @@ export default class BoardController {
       render(tasksListElement, this._noTasksComponent);
       return;
     }
+
     const makeShowNewTasksFunc = (tasksArr) => {
       let tasksToShow = tasksArr.slice();
       return (count) => {
